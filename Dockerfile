@@ -1,4 +1,4 @@
-FROM rawlingsj/builder-base:0.0.8
+FROM rawlingsj/builder-base:0.0.9
 
 ENV GOLANG_VERSION 1.9.2
 RUN wget https://golang.org/dl/go$GOLANG_VERSION.linux-amd64.tar.gz && \
