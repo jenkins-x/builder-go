@@ -26,6 +26,6 @@ ENV PATH $PATH:/usr/local/glide
 ENV PATH $PATH:/usr/local/
 ENV GOROOT /usr/local/go
 ENV PATH $PATH:/go/bin
-ENV GOPATH=/go
+ENV GOPATH=/home/jenkins/go
 
 CMD ["go","version"]
