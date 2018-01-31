@@ -1,4 +1,4 @@
-FROM jenkinsxio/builder-base:0.0.13
+FROM jenkinsxio/builder-base:0.0.18
 
 ENV GOLANG_VERSION 1.9.2
 RUN wget https://golang.org/dl/go$GOLANG_VERSION.linux-amd64.tar.gz && \
