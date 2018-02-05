@@ -1,5 +1,6 @@
 FROM jenkinsxio/builder-base:0.0.31
 
+RUN yum -y groupinstall 'Development Tools'
 ENV GOLANG_VERSION 1.9.2
 RUN wget https://golang.org/dl/go$GOLANG_VERSION.linux-amd64.tar.gz && \
   tar -C /usr/local -xzf go$GOLANG_VERSION.linux-amd64.tar.gz && \
