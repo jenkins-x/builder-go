@@ -22,6 +22,7 @@ RUN wget https://github.com/progrium/gh-release/releases/download/v$GH_RELEASE_V
 ENV JQ_RELEASE_VERSION 1.5
 RUN wget https://github.com/stedolan/jq/releases/download/jq-${JQ_RELEASE_VERSION}/jq-linux64 && mv jq-linux64 jq && chmod +x jq && cp jq /usr/bin/jq
 
+RUN mkdir -p /home/jenkins/go/bin
 ENV PATH $PATH:/usr/local/go/bin
 ENV PATH $PATH:/usr/local/glide
 ENV PATH $PATH:/usr/local/
