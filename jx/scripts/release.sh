@@ -17,3 +17,4 @@ git tag -fa v${VERSION} -m "Release version ${VERSION}"
 git push origin v${VERSION}
 
 updatebot push-version --kind helm jenkinsxio/builder-go ${VERSION}
+updatebot update-loop
