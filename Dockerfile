@@ -26,7 +26,11 @@ ENV PATH $PATH:/usr/local/go/bin
 ENV PATH $PATH:/usr/local/glide
 ENV PATH $PATH:/usr/local/
 ENV GOROOT /usr/local/go
-ENV PATH $PATH:/go/bin
 ENV GOPATH=/home/jenkins/go
+ENV PATH $PATH:$GOPATH/bin
+
+RUN go get github.com/DATA-DOG/godog/cmd/godog && \
+  mv $GOPATH/bin/godog /usr/local/ && \
+  rm -rf $GOPATH/src/github.com/DATA-DOG
 
 CMD ["go","version"]
