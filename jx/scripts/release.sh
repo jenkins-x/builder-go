@@ -11,6 +11,8 @@ echo "Releasing version to ${VERSION}"
 
 docker build -t docker.io/$ORG/$APP_NAME:${VERSION} .
 docker push docker.io/$ORG/$APP_NAME:${VERSION}
+docker tag docker.io/$ORG/$APP_NAME:${VERSION} docker.io/$ORG/$APP_NAME:latest
+docker push docker.io/$ORG/$APP_NAME
 
 #jx step tag --version ${VERSION}
 git tag -fa v${VERSION} -m "Release version ${VERSION}"
