@@ -33,4 +33,8 @@ RUN go get github.com/DATA-DOG/godog/cmd/godog && \
   mv $GOPATH/bin/godog /usr/local/ && \
   rm -rf $GOPATH/src/github.com/DATA-DOG
 
+RUN go get github.com/gohugoio/hugo && \
+  mv $GOPATH/bin/hugo /usr/local/ && \
+  rm -rf $GOPATH/src/github.com/gohugoio
+
 CMD ["go","version"]
