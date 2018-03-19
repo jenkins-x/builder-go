@@ -7,7 +7,7 @@ pipeline {
         APP_NAME    = 'builder-go'
     }
     stages {
-        stage('CI Build and push snapshpt') {
+        stage('CI Build and push snapshot') {
             when {
                 branch 'PR-*'
             }
