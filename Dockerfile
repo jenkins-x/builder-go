@@ -24,7 +24,7 @@ RUN wget https://github.com/stedolan/jq/releases/download/jq-${JQ_RELEASE_VERSIO
 
 ENV PROTOBUF 3.5.1
 RUN wget https://github.com/google/protobuf/releases/download/v${PROTOBUF}/protoc-${PROTOBUF}-linux-x86_64.zip && \
-  protoc-${PROTOBUF}-linux-x86_64.zip -d protoc && \
+  unzip protoc-${PROTOBUF}-linux-x86_64.zip -d protoc && \
   chmod +x protoc && cp protoc /usr/bin/protoc
 
 
