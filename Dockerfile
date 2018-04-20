@@ -46,6 +46,7 @@ RUN go get github.com/gohugoio/hugo && \
 RUN go get github.com/golang/protobuf/proto && \
   go get github.com/micro/protoc-gen-micro && \
   go get github.com/golang/protobuf/protoc-gen-go && \ 
-  mv $GOPATH/bin/* /usr/local/ 
+  mv $GOPATH/bin/* /usr/local/ && \ 
+  cp -r $GOPATH/src/* /usr/local/go/src
 
 CMD ["go","version"]
