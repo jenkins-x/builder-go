@@ -22,6 +22,12 @@ RUN wget https://github.com/progrium/gh-release/releases/download/v$GH_RELEASE_V
 ENV JQ_RELEASE_VERSION 1.5
 RUN wget https://github.com/stedolan/jq/releases/download/jq-${JQ_RELEASE_VERSION}/jq-linux64 && mv jq-linux64 jq && chmod +x jq && cp jq /usr/bin/jq
 
+ENV PROTOBUF 3.5.1
+RUN wget https://github.com/google/protobuf/releases/download/v${PROTOBUF}/protoc-${PROTOBUF}-linux-x86_64.zip && \
+  unzip protoc-${PROTOBUF}-linux-x86_64.zip -d protoc && \
+  chmod +x protoc && cp protoc/bin/protoc /usr/bin/protoc && rm -rf protoc
+
+
 ENV PATH $PATH:/usr/local/go/bin
 ENV PATH $PATH:/usr/local/glide
 ENV PATH $PATH:/usr/local/
@@ -36,5 +42,12 @@ RUN go get github.com/DATA-DOG/godog/cmd/godog && \
 RUN go get github.com/gohugoio/hugo && \
   mv $GOPATH/bin/hugo /usr/local/ && \
   rm -rf $GOPATH/src/github.com/gohugoio
+
+RUN go get github.com/golang/protobuf/proto && \
+  go get github.com/micro/protoc-gen-micro && \
+  go get github.com/golang/protobuf/protoc-gen-go && \ 
+  go get -u github.com/micro/micro && \
+  mv $GOPATH/bin/* /usr/local/ && \ 
+  cp -r $GOPATH/src/* /usr/local/go/src
 
 CMD ["go","version"]
