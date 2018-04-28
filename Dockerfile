@@ -42,6 +42,10 @@ RUN go get github.com/DATA-DOG/godog/cmd/godog && \
 RUN go get github.com/gohugoio/hugo && \
   mv $GOPATH/bin/hugo /usr/local/ && \
   rm -rf $GOPATH/src/github.com/gohugoio
+  
+RUN go get github.com/derekparker/delve/cmd/dlv && \
+  mv $GOPATH/bin/* /usr/local/ && \
+  rm -rf $GOPATH/src/github.com/derekparker
 
 RUN go get github.com/golang/protobuf/proto && \
   go get github.com/micro/protoc-gen-micro && \
