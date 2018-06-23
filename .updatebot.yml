@@ -3,3 +3,4 @@ github:
   - name: jenkins-x
     repositories:
     - name: jenkins-x-platform
+    - name: builder-go-maven
