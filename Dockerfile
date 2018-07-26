@@ -1,4 +1,4 @@
-FROM jenkinsxio/builder-base:0.0.430
+FROM jenkinsxio/builder-base:0.0.431
 
 RUN yum -y groupinstall 'Development Tools'
 ENV GOLANG_VERSION 1.10.3
