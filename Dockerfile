@@ -1,17 +1,6 @@
-FROM jenkinsxio/builder-base:0.0.447
+FROM golang:1.11beta2 
 
-RUN yum -y groupinstall 'Development Tools'
-ENV GOLANG_VERSION 1.11beta2
-RUN wget https://golang.org/dl/go$GOLANG_VERSION.linux-amd64.tar.gz && \
-  tar -C /usr/local -xzf go$GOLANG_VERSION.linux-amd64.tar.gz && \
-  rm go${GOLANG_VERSION}.linux-amd64.tar.gz
-
-ENV GLIDE_VERSION v0.13.1
-ENV GO15VENDOREXPERIMENT 1
-RUN wget https://github.com/Masterminds/glide/releases/download/$GLIDE_VERSION/glide-$GLIDE_VERSION-linux-amd64.tar.gz && \
-  tar -xzf glide-$GLIDE_VERSION-linux-amd64.tar.gz && \
-  mv linux-amd64 /usr/local/glide && \
-  rm glide-$GLIDE_VERSION-linux-amd64.tar.gz
+WORKDIR /home/jenkins
 
 ENV GH_RELEASE_VERSION 2.2.1
 RUN wget https://github.com/progrium/gh-release/releases/download/v$GH_RELEASE_VERSION/gh-release_${GH_RELEASE_VERSION}_linux_x86_64.tgz && \
@@ -22,37 +11,32 @@ RUN wget https://github.com/progrium/gh-release/releases/download/v$GH_RELEASE_V
 ENV JQ_RELEASE_VERSION 1.5
 RUN wget https://github.com/stedolan/jq/releases/download/jq-${JQ_RELEASE_VERSION}/jq-linux64 && mv jq-linux64 jq && chmod +x jq && cp jq /usr/bin/jq
 
+RUN apt-get -y update && apt-get -y install unzip
 ENV PROTOBUF 3.5.1
 RUN wget https://github.com/google/protobuf/releases/download/v${PROTOBUF}/protoc-${PROTOBUF}-linux-x86_64.zip && \
   unzip protoc-${PROTOBUF}-linux-x86_64.zip -d protoc && \
   chmod +x protoc && cp protoc/bin/protoc /usr/bin/protoc && rm -rf protoc
 
+# helm
+ENV HELM_VERSION 2.10.0-rc.1
+RUN curl https://storage.googleapis.com/kubernetes-helm/helm-v${HELM_VERSION}-linux-amd64.tar.gz  | tar xzv && \
+  mv linux-amd64/helm /usr/bin/ && \
+  rm -rf linux-amd64
 
-ENV PATH $PATH:/usr/local/go/bin
-ENV PATH $PATH:/usr/local/glide
-ENV PATH $PATH:/usr/local/
-ENV GOROOT /usr/local/go
-ENV GOPATH=/home/jenkins/go
-ENV PATH $PATH:$GOPATH/bin
+RUN curl -L https://github.com/jstrachan/helm/releases/download/untagged-93375777c6644a452a64/helm-linux-amd64.tar.gz -o helm3.tgz && \
+  tar xf helm3.tgz && \
+  mv helm /usr/bin/helm3
 
-RUN go get github.com/DATA-DOG/godog/cmd/godog && \
-  mv $GOPATH/bin/godog /usr/local/ && \
-  rm -rf $GOPATH/src/github.com/DATA-DOG
+# skaffold
+ENV SKAFFOLD_VERSION 0.9.0
+RUN curl -Lo skaffold https://github.com/GoogleCloudPlatform/skaffold/releases/download/v${SKAFFOLD_VERSION}/skaffold-linux-amd64 && \
+  chmod +x skaffold && \
+  mv skaffold /usr/bin
 
-RUN go get github.com/gohugoio/hugo && \
-  mv $GOPATH/bin/hugo /usr/local/ && \
-  rm -rf $GOPATH/src/github.com/gohugoio
-  
-RUN go get github.com/derekparker/delve/cmd/dlv && \
-  mv $GOPATH/bin/* /usr/local/ && \
-  rm -rf $GOPATH/src/github.com/derekparker
-
-RUN go get github.com/golang/protobuf/proto && \
-  go get github.com/micro/protoc-gen-micro && \
-  go get github.com/golang/protobuf/protoc-gen-go && \ 
-  go get -u github.com/micro/micro && \
-  go get github.com/cespare/reflex && \
-  mv $GOPATH/bin/* /usr/local/ && \ 
-  cp -r $GOPATH/src/* /usr/local/go/src    
+# jx-release-version
+ENV JX_RELEASE_VERSION 1.0.10
+RUN curl -o ./jx-release-version -L https://github.com/jenkins-x/jx-release-version/releases/download/v${JX_RELEASE_VERSION}/jx-release-version-linux && \
+  mv jx-release-version /usr/bin/ && \
+  chmod +x /usr/bin/jx-release-version
 
 CMD ["go","version"]
