@@ -1,7 +1,7 @@
 FROM jenkinsxio/builder-base:0.0.497
 
 RUN yum -y groupinstall 'Development Tools'
-ENV GOLANG_VERSION 1.11beta2
+ENV GOLANG_VERSION 1.11
 RUN wget https://golang.org/dl/go$GOLANG_VERSION.linux-amd64.tar.gz && \
   tar -C /usr/local -xzf go$GOLANG_VERSION.linux-amd64.tar.gz && \
   rm go${GOLANG_VERSION}.linux-amd64.tar.gz
@@ -51,7 +51,6 @@ RUN go get github.com/golang/protobuf/proto && \
   go get github.com/micro/protoc-gen-micro && \
   go get github.com/golang/protobuf/protoc-gen-go && \ 
   go get -u github.com/micro/micro && \
-  go get github.com/cespare/reflex && \
   mv $GOPATH/bin/* /usr/local/ && \ 
   cp -r $GOPATH/src/* /usr/local/go/src    
 
