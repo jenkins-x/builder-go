@@ -1,4 +1,4 @@
-FROM jenkinsxio/builder-base:0.0.585
+FROM jenkinsxio/builder-base:0.0.586
 
 RUN yum -y groupinstall 'Development Tools'
 RUN curl -f -o /etc/yum.repos.d/vbatts-bazel-epel-7.repo  https://copr.fedorainfracloud.org/coprs/vbatts/bazel/repo/epel-7/vbatts-bazel-epel-7.repo && \
