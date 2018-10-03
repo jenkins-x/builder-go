@@ -18,6 +18,7 @@ docker push docker.io/$ORG/$APP_NAME
 git tag -fa v${VERSION} -m "Release version ${VERSION}"
 git push origin v${VERSION}
 
+updatebot push-regex -r "\s+tag: (.*)" -v ${VERSION} --previous-line "\s+repository: jenkinsxio/builder-go" values.yaml
 updatebot push-version --kind helm jenkinsxio/builder-go ${VERSION}
 updatebot push-version --kind docker jenkinsxio/builder-go ${VERSION}
 updatebot update-loop
